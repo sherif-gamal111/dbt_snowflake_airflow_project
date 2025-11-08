@@ -1,7 +1,9 @@
 dbt Snowflake Airflow Project
 A production-ready data pipeline template demonstrating modern data stack best practices with dbt, Snowflake, and Apache Airflow. This project transforms raw data into reliable, analytics-ready datasets with comprehensive data quality checks and orchestration.
 
-🚀 Overview
+---
+
+## 🚀 Overview
 This project implements a complete ELT pipeline that:
 
 Extracts raw data from source systems
@@ -14,7 +16,9 @@ Orchestrates with Airflow for reliable scheduling and monitoring
 
 Test data quality with automated validation frameworks
 
-🏗️ Architecture
+---
+
+## 🏗️ Architecture
 text
 Raw Sources → Snowflake → dbt Transformations → Analytics Ready Data
                      ↓
@@ -24,7 +28,9 @@ Staging: Raw data cleaning and standardization (materialized: view)
 
 Marts: Business-ready datasets and metrics (materialized: table)
 
-📁 Project Structure
+---
+
+## 📁 Project Structure
 text
 ```
 dbt_snowflake_airflow_project/
@@ -42,9 +48,10 @@ dbt_snowflake_airflow_project/
 ├── profiles.yml          # Snowflake connection
 └── README.md
 ```
+
 ---
 
-🛠️ Core Components
+## 🛠️ Core Components
 Staging Models
 stg_customers: Customer data standardization and cleaning
 
@@ -68,7 +75,9 @@ Business Logic: Valid status values, email format validation
 
 Data Completeness: Required field validation
 
-⚙️ Configuration
+---
+
+## ⚙️ Configuration
 dbt Project (dbt_project.yml)
 yaml
 - Staging layer: Materialized as views for data freshness
@@ -79,7 +88,10 @@ yaml
 - Unique and not_null constraints on primary keys
 - Relationship tests between related models
 - Accepted value validation for business domains
-🚀 Getting Started
+
+---
+
+## 🚀 Getting Started
 Prerequisites
 Python 3.8+
 
@@ -124,7 +136,10 @@ Generate documentation:
 bash
 dbt docs generate
 dbt docs serve
-📊 Data Model
+
+---
+
+## 📊 Data Model
 Staging Layer
 Cleans raw source data
 
@@ -143,7 +158,9 @@ Supports reporting and dashboarding
 
 Optimized for query performance
 
-🔧 Data Quality & Testing
+---
+
+## 🔧 Data Quality & Testing
 This project includes 25+ automated data tests:
 
 Uniqueness: Primary key validation
@@ -160,7 +177,10 @@ Run tests with:
 
 bash
 dbt test
-🎯 Business Value
+
+---
+
+## 🎯 Business Value
 Daily Order Revenue: Track and analyze daily sales performance
 
 Customer Analytics: Understand customer behavior and lifetime value
@@ -171,7 +191,9 @@ Data Reliability: Trusted data foundation for business decisions
 
 Operational Efficiency: Automated pipeline with monitoring
 
-🤝 Contributing
+---
+
+## 🤝 Contributing
 Fork the repository
 
 Create a feature branch (git checkout -b feature/amazing-feature)
@@ -182,10 +204,14 @@ Push to the branch (git push origin feature/amazing-feature)
 
 Open a Pull Request
 
-📝 License
+---
+
+## 📝 License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-🙏 Acknowledgments
+---
+
+## 🙏 Acknowledgments
 dbt Labs for the amazing transformation framework
 
 Snowflake for the cloud data platform
@@ -194,17 +220,29 @@ Apache Airflow for workflow orchestration
 
 The modern data community for best practices and inspiration
 
-☕ Stay Connected
+---
+
+## ☕ Stay Connected
 Let's stay in touch! Feel free to connect with me on the following platforms:
 
 LinkedIn Upwork Freelancer Portfolio
 
-🛡️ License
+---
+
+## 🛡️ License
 This project is licensed under the MIT License. You are free to use, modify, and share this project with proper attribution.
 
-🌟 About Me
-Hi, I’m Sherif, a Data Engineer with a strong foundation in Industrial Engineering and specialized in Data Engineering. I hold a Bachelor of Engineering (BEng) in Industrial Engineering from Canadian International College (CIC) and a Microsoft Data Engineering degree from Digital Egypt Pioneers Initiative (DEPI). I am fascinated by how systems work, how processes can be optimized, and how the right information at the right time can change everything. That curiosity led me to Industrial Engineering, and later, to Data Engineering.
+---
+
+## 🌟 About Me
+
+Hi, I’m Sherif, a Data Engineer with a strong foundation in Industrial Engineering and specialized in Data Engineering.
+I hold a Bachelor of Engineering (BEng) in Industrial Engineering from Canadian International College (CIC) and a Microsoft Data Engineering degree from Digital Egypt Pioneers Initiative (DEPI).
+I am fascinated by how systems work, how processes can be optimized, and how the right information at the right time can change everything. That curiosity led me to Industrial Engineering, and later, to Data Engineering.
 
 Let's stay in touch! Feel free to connect with me on the following platforms:
 
-LinkedIn Upwork Freelancer Portfolio
+[LinkedIn](www.linkedin.com/in/sherif-gamal-61a304336)
+[Upwork](https://www.upwork.com/freelancers/~01b7b6e3cdf572d79e)
+[Freelancer](https://www.freelancer.com/u/SherifGamal5)
+[Portfolio](https://sherif-gamal-data-engine-ns2r13f.gamma.site/)
