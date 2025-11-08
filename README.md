@@ -1,4 +1,4 @@
-dbt Snowflake Airflow Project
+## dbt Snowflake Airflow Project
 A production-ready data pipeline template demonstrating modern data stack best practices with dbt, Snowflake, and Apache Airflow. This project transforms raw data into reliable, analytics-ready datasets with comprehensive data quality checks and orchestration.
 
 ---
