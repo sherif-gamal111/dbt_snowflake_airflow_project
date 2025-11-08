@@ -1,0 +1,156 @@
+FINANCE_DB.RAW.FINANCE_STAGEFINANCE_DB.RAW.FINANCE_STAGE
+
+/*
+creating a data warehouse
+*/
+
+create or replace warehouse finance_wh
+with warehouse_size = 'XSMALL'  -- it specifies the size of the warehouse (if the size increases, it increases the cost)
+auto_suspend = 60   -- as long as I don't use the warehouse, suspend it (to decrease the cost)
+auto_resume = TRUE  -- when I run a query, resume the warehouse automatically; I don't have to restart it by myself
+initially_suspended = TRUE; -- when I create a warehouse, suspend it so it does not cost me money even if I don't run a query
+
+/*
+creating a database and a schema
+*/
+
+create or replace database finance_db;
+create or replace schema raw;
+
+/*
+creating tables
+*/
+
+drop table raw.customers;
+
+create or replace table raw.customers(
+    id int primary key,
+    name varchar,
+    email varchar,
+    country varchar
+);
+
+create or replace table raw.orders(
+    id int primary key,
+    customer_id int,
+    order_date date,
+    total_amount int,
+    status varchar
+);
+
+create or replace table raw.order_items(
+    id int primary key,
+    order_id int,
+    product_id int,
+    quantity int,
+    unit_price int
+);
+
+
+create or replace table raw.products(
+    id int primary key,
+    name varchar,
+    category varchar,
+    price int
+);
+
+-- Why should I use Snowflake for uploading data and not use seeds in dbt?
+    -- seed:
+        -- It inserts data row by row; it does not depend on bulk load, which makes it slow in a large data set
+        -- if any changes happened in the data file, the seed overwrites the whole table, so it repeats uploading the whole data with the new changes, and does not add the changes incrementally
+        -- dbt stores data in the dbt repo, so you can't store big data
+
+/*
+There is another way of loading, which is to copy into
+    First, we will create a stage (temp storage) 
+    Second, we will copy the data from the stage to the table I created
+*/
+-- we will load the data in raw.products by copy into way
+
+create or replace stage finance_stage
+file_format = (type = 'CSV', skip_header = 1);
+
+copy into raw.products
+from @finance_stage/products.csv
+file_format = (type = 'CSV' skip_header = 1);
+
+
+-- will return the current region and account (need it for dbt)
+    -- current_region is azure_uaenorth
+        -- put the region like this uae-north
+    -- current_account is hd41521
+
+select lower(current_region()), lower(current_account()); 
+
+-- will return the current user (need it for dbt)
+
+select current_user(); -- will return the current user
+select all_user_names(); -- will return all the users
+
+-- How to create a user
+
+create user admin_user password = 'admin_user_password'
+login_name = 'admin_user'
+default_role = ACCOUNTADMIN
+must_change_password = FALSE;
+
+-- Grant access to the user
+
+grant role ACCOUNTADMIN to user admin_user;
+
+-- Grant access to the database
+
+grant usage on database finance_db to role ACCOUNTADMIN;
+grant usage on schema finance_db.raw to role ACCOUNTADMIN;
+
+-- Grant warehouse access
+
+grant usage on warehouse finance_wh to role ACCOUNTADMIN;
+
+-- Grant table access
+
+grant select, insert, update, delete on all tables in schema finance_db.raw to role ACCOUNTADMIN;
+
+
+/*
+Look at the tables to know if there are any changes we need to make to them
+*/
+
+-- we need to change:
+    -- name of the ID column to Customer_ID
+    -- name of the Name column to Customer_name
+    -- name of the Email column to Customer_email
+
+select * from customers;
+
+-- we need to change:
+    -- name of the ID column to Order_ID
+
+select * from orders;
+
+-- we need to change:
+    -- name of the ID column to Order_Items_ID
+    -- adding new column called Total_Price --> quantity * unit_price
+
+select * from order_items;
+
+-- we need to change:
+    -- name of the ID column to Product_ID
+    -- name of the Name column to Product_Name
+
+select * from products;
+
+/*
+Looking for the stages view to make sure everything is good
+*/
+
+select * from stg_customers;
+select * from stg_orders;
+select * from stg_order_items;
+select * from stg_products;
+
+/*
+Looking for the fact table to make sure everything is good
+*/
+
+select * from fct_daily_order_revenue;
