@@ -1,0 +1,92 @@
+/*
+==================================================================================================================================================================
+                                                                  Add comprehensive schema tests for staging models
+==================================================================================================================================================================
+Script Purpose:
+    - Implements data quality framework with dbt schema tests
+    - Adds primary key validation (unique, not_null) for all staging tables
+    - Enforces referential integrity between related models
+    - Validates order status with accepted values test
+    - Ensures data consistency across the entire staging layer
+==================================================================================================================================================================    
+
+# snowflake_test.yml
+
+**Type:** dbt Schema Tests Configuration
+**Purpose:** Data Quality Validation Framework
+**Coverage:** Complete staging layer data integrity
+
+## Test Architecture
+
+### Test Types Implemented
+- **Generic Tests:** "unique", "not_null" - Built-in dbt validations
+- **Custom Generic Tests:** "accepted_values" - Domain value validation
+- **Relationship Tests:** Foreign key integrity constraints
+
+### Data Model Validation
+
+*/
+
+
+version: 2
+
+models:
+  - name: stg_orders
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+      
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['completed', 'pending', 'cancelled']
+              quote: false
+
+  - name: stg_customers
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_email  # Fixed: should match your actual column name
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_order_items
+    columns:
+      - name: order_item_id
+        tests:
+          - unique
+          - not_null
+
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+
+      - name: product_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+
+  - name: stg_products
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
