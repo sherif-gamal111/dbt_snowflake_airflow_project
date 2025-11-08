@@ -217,13 +217,6 @@ The modern data community for best practices and inspiration
 
 ---
 
-## ☕ Stay Connected
-Let's stay in touch! Feel free to connect with me on the following platforms:
-
-LinkedIn Upwork Freelancer Portfolio
-
----
-
 ## 🛡️ License
 This project is licensed under the MIT License. You are free to use, modify, and share this project with proper attribution.
 
