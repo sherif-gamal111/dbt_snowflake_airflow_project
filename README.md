@@ -26,6 +26,7 @@ Marts: Business-ready datasets and metrics (materialized: table)
 
 📁 Project Structure
 text
+```
 dbt_snowflake_airflow_project/
 ├── models/
 │   ├── staging/          # Data cleaning & standardization
@@ -40,6 +41,9 @@ dbt_snowflake_airflow_project/
 ├── dbt_project.yml        # Project configuration
 ├── profiles.yml          # Snowflake connection
 └── README.md
+```
+---
+
 🛠️ Core Components
 Staging Models
 stg_customers: Customer data standardization and cleaning
